@@ -1,5 +1,9 @@
+import time
+
 import algorithms
 import functions
+import numpy as np
+import matplotlib.pyplot as plt
 
 print("wybierz funkcję z podanych wpisując cyfrę znajdująca się obok funkcji:")
 print("1.wielomian")
@@ -30,6 +34,19 @@ while True:
         break
     else:
         print("podano niewłasciwa wartosc. Sprobuj ponownie.")
+
+print("Obejrzyj wykres wybranej funkcji.")
+print("rysowania...")
+time.sleep(1)
+
+x_values = np.arange(-10, 10.1, 0.1)
+y_values = function(x_values)
+x_axis = functions.const_zero(x_values)
+
+plt.figure(num=0, dpi=300)
+plt.plot(x_values, y_values)
+plt.plot(x_values, x_axis, color="black")
+plt.show()
 
 a,b = 0, 0
 print("Wybierz przedzial, na ktorym program ma znalezc miejsce zerowe, podajac poczatek i koniec przedzialu:")
@@ -82,9 +99,13 @@ while True:
     else:
         print("Podano niewlasciwa opcje (Brak wybranej opcji). Sprobuj ponownie.")
 
-approx = 0
-done_epsilon_iter = 0
+bi_approx = 0
+bi_accur_iter = 0
+fa_approx = 0
+fa_accur_iter = 0
 if stop_con == "1":
-    approx,done_epsilon_iter = algorithms.bisection_iteration(a,b,function,iter_epsilon)
+    bi_approx, bi_accur_iter = algorithms.bisection_iteration(a,b,function,iter_epsilon)
+    fa_approx, fa_accur_iter = algorithms.falsi_iteration(a,b,function,iter_epsilon)
 else:
-    approx,done_epsilon_iter = algorithms.bisection_epsilon(a,b,function,iter_epsilon)
+    bi_approx, bi_accur_iter = algorithms.bisection_epsilon(a,b,function,iter_epsilon)
+    fa_approx, fa_accur_iter = algorithms.falsi_iteration(a,b,function,iter_epsilon)

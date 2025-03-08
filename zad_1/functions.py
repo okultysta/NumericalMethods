@@ -1,8 +1,7 @@
 import numpy as np
 
 def polynomial(x):
-    #4x^4 +2x^3 +8x^2 +5x +5
-    return x*(x*(x*(4*x+2)+8)+5)+5
+    return (x+8.2938491)*(x+1.484719)*(x-3.92837492)*(x-8.9999998)
 
 def exponential(x):
     wynik = x
@@ -12,6 +11,9 @@ def exponential(x):
 
 def trigonometric(x):
     return 2 * np.cos(x) * np.sin(x) + 10*np.cos(3*x) / np.sin(x/2)
+
+def const_zero(x):
+    return x*0
 
 
 ######### FUNCTIONS FOR TESTS ############
