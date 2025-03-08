@@ -1,4 +1,5 @@
-import MetodaBisekcji
+import algorithms
+import functions
 
 print("wybierz funkcję z podanych wpisując cyfrę znajdująca się obok funkcji:")
 print("1.wielomian")
@@ -6,26 +7,26 @@ print("2.Trygonometryczna")
 print("3.wykładnicza")
 print("4.Złorzenie")
 
-function = MetodaBisekcji.polynomial
+function = functions.polynomial
 not_chosen = True
 
 while True:
     choice = input("Wpisz numer wybranej funkcji [1/2/3/4]:")
     if choice == "1":
         print("wybrales funkcje wielomian")
-        function = MetodaBisekcji.polynomial
+        function = functions.polynomial
         break
     elif choice == "2":
         print("wybrales funkcje trygonometryczna")
-        function = MetodaBisekcji.trigonometric
+        function = functions.trigonometric
         break
     elif choice == "3":
         print("wybrales funkcje wykladnicza")
-        function = MetodaBisekcji.exponential
+        function = functions.exponential
         break
     elif choice == "4":
         print("wybrales funkcje zlozenia")
-        #function = MetodaBisekcji.polynomial
+        #function = functions.polynomial
         break
     else:
         print("podano niewłasciwa wartosc. Sprobuj ponownie.")
@@ -47,7 +48,7 @@ while True:
     else:
         break
 
-stop_con = 0
+stop_con = ""
 iter_epsilon = 0
 print("Wybierz kryterium zatrzymania dla algorytmu poprzez wpisanie odpowiadajacej mu liczby:")
 print("1.Liczba iteracji - algorytm zakonczy dzialanie i zwroci wynik po wykonaniu okreslonej liczby iteracji")
@@ -68,7 +69,7 @@ while True:
         break
 
     elif stop_con == "2":
-        print("Wybrales kryterium iteracyjne.")
+        print("Wybrales kryterium dokladnosci wyniku.")
         while True:
             print("UWAGA: Wartosc epsilon musi byc wieksza od zera!")
             iter_epsilon = input("Podaj wartosc epsilon dla dokladnosci, po osiagnieciu ktorej algorytm zakoczy dzialanie")
@@ -80,3 +81,10 @@ while True:
         break
     else:
         print("Podano niewlasciwa opcje (Brak wybranej opcji). Sprobuj ponownie.")
+
+approx = 0
+done_epsilon_iter = 0
+if stop_con == "1":
+    approx,done_epsilon_iter = algorithms.bisection_iteration(a,b,function,iter_epsilon)
+else:
+    approx,done_epsilon_iter = algorithms.bisection_epsilon(a,b,function,iter_epsilon)
