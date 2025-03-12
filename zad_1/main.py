@@ -3,6 +3,9 @@ import functions
 import numpy as np
 import matplotlib.pyplot as plt
 
+#czy horner moze tak wygladac
+#czy tak moze wygladac wyliczanie dokladnosci
+
 print()
 print("Wybierz funkcję z podanych wpisując cyfrę znajdująca się obok funkcji:")
 print()
@@ -13,30 +16,32 @@ print("4.Złorzenie: e^x - 1000*cos(x/2) - 250")
 
 function = functions.polynomial
 not_chosen = True
+flag = True
 
-while True:
+while flag:
     print()
     choice = input("Wpisz numer wybranej funkcji [1/2/3/4]:")
     if choice == "1":
         print("wybrales funkcje wielomian")
         function = functions.polynomial
-        break
+        flag = False
     elif choice == "2":
         print("wybrales funkcje trygonometryczna")
         function = functions.trigonometric
-        break
+        flag = False
     elif choice == "3":
         print("wybrales funkcje wykladnicza")
         function = functions.exponential
-        break
+        flag = False
     elif choice == "4":
         print("wybrales funkcje zlozenia")
         function = functions.mixed
-        break
+        flag = False
     else:
         print()
         print("BLAD: Brak wybranej opcji. Sprobuj ponownie.")
 
+flag = True
 print("Obejrzyj wykres wybranej funkcji.")
 print()
 
@@ -52,7 +57,7 @@ plt.show()
 
 a,b = 0, 0
 print("Wybierz przedzial, na ktorym program ma znalezc miejsce zerowe, podajac poczatek i koniec przedzialu:")
-while True:
+while flag:
     a = input("Podaj poczatek przedzialu:")
     b = input("Podaj koniec przedzialu:")
     a = float(a)
@@ -73,8 +78,10 @@ while True:
         print("Sprobuj wybran krance przedzialu ponownie.")
         print()
     else:
-        break
+        flag = False
 
+flag = True
+flag2 = True
 stop_con = ""
 iter_epsilon = 0
 print()
@@ -84,12 +91,12 @@ print("1.Liczba iteracji - algorytm zakonczy dzialanie i zwroci wynik po wykonan
 print("2.Dokladnosc wyniku - algorytm zakonczy  i zwroci wynik po osiagnieciu okreslonej dokladnosci")
 print()
 
-while True:
+while flag:
     stop_con = input("Podaj warunek stopu [1/2]:")
     print()
     if stop_con == "1":
         print("Wybrales kryterium iteracyjne.")
-        while True:
+        while flag2:
             print()
             print("UWAGA: Liczba iteracji musi byc liczba calkowita oraz nie moze byc mniejsza od 1!")
             iter_epsilon = input("Podaj liczbe iteracji jaka program ma przeprowadzic:")
@@ -98,12 +105,12 @@ while True:
                 print()
                 print("BLAD: Podana wartosc jest niewlasciwa (mniejsza od 1). Sprobuj ponownie.")
             else:
-                break
-        break
+                flag2 = False
+        flag = False
 
     elif stop_con == "2":
         print("Wybrales kryterium dokladnosci wyniku.")
-        while True:
+        while flag2:
             print()
             print("UWAGA: Wartosc epsilon musi byc wieksza od zera!")
             iter_epsilon = input("Podaj wartosc epsilon dla dokladnosci, po osiagnieciu ktorej algorytm zakoczy dzialanie:")
@@ -112,8 +119,8 @@ while True:
                 print()
                 print("BLAD: Podana wartosc jest niewlasciwa (mniejsza od 0). Sprobuj ponownie.")
             else:
-                break
-        break
+                flag2 = False
+        flag = False
     else:
         print()
         print("BLAD: Podano niewlasciwa opcje (Brak wybranej opcji). Sprobuj ponownie.")

@@ -1,10 +1,19 @@
 import numpy as np
 
 def polynomial(x):
-    return (x+8.2938491)*(x+1.484719)*(x-3.92837492)*(x-8.9999998)
+    wspolczynniki = [1, 0.47, -80.8248, -19.2608, 990.2336]
+    length = 5
+    result = wspolczynniki[0]
+    for i in range(1, length):
+        result = result*x + wspolczynniki[i]
+    return result
 
 def exponential(x):
-    return (2**x)-100
+    result = 1
+    for i in range(0, x):
+        result = result * 2
+    result -= 100
+    return result
 
 def trigonometric(x):
     return np.sin(x)-0.5
