@@ -3,9 +3,6 @@ import functions
 import numpy as np
 import matplotlib.pyplot as plt
 
-#czy horner moze tak wygladac
-#czy tak moze wygladac wyliczanie dokladnosci
-
 print()
 print("Wybierz funkcję z podanych wpisując cyfrę znajdująca się obok funkcji:")
 print()
