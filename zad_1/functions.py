@@ -1,6 +1,9 @@
 import numpy as np
 import math
 
+from numpy.ma.extras import atleast_1d
+
+
 def polynomial(x):
     wspolczynniki = [1, 0.47, -80.8248, -19.2608, 990.2336]
     length = 5
@@ -13,10 +16,12 @@ def exponential(x):
     return 2**x - 100
 
 """
-    if x<0:
-        return 1/math.exp(-x)-100
-    else:
-        return math.exp(-x)-100
+    x = atleast_1d(x)
+    for num in x:
+        if num<0:
+            return 1/math.exp(-num)-100
+        else:
+            return math.exp(-num)-100
 """
 
 """
