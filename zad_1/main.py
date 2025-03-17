@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 print()
 print("Wybierz funkcję z podanych wpisując cyfrę znajdująca się obok funkcji:")
 print()
-print("1.wielomian: (x+8.2938491)*(x+1.484719)*(x-3.92837492)*(x-8.9999998)")
+print("1.wielomian: ")
 print("2.Trygonometryczna: sin(x) - 0.5")
 print("3.wykładnicza: 2^x - 100")
 print("4.Złorzenie: e^x - 1000*cos(x/2) - 250")

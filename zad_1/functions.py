@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 def polynomial(x):
     wspolczynniki = [1, 0.47, -80.8248, -19.2608, 990.2336]
@@ -9,11 +10,32 @@ def polynomial(x):
     return result
 
 def exponential(x):
-    result = 1
-    for i in range(0, x):
-        result = result * 2
-    result -= 100
-    return result
+    return 2**x - 100
+
+"""
+    if x<0:
+        return 1/math.exp(-x)-100
+    else:
+        return math.exp(-x)-100
+"""
+
+"""
+    x = np.atleast_1d(x)
+    for num in x:
+        result = 1
+        if num < 0:
+            return 1 / exponential(-num)
+        if num == 0:
+            return 1
+        if num % 1 == 0:
+            num = int(num)
+            for i in range(num):
+                result *= num
+            return result - 100
+        else:
+            result = 2 ** num
+            return result - 100
+"""
 
 def trigonometric(x):
     return np.sin(x)-0.5
