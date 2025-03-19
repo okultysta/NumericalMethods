@@ -9,7 +9,7 @@ print()
 print("1.wielomian: ")
 print("2.Trygonometryczna: sin(x) - 0.5")
 print("3.wykładnicza: 2^x - 100")
-print("4.Złorzenie: e^x - 1000*cos(x/2) - 250")
+print("4.Złożenie: e^x - 1000*cos(x/2) - 250")
 
 function = functions.polynomial
 not_chosen = True
@@ -50,6 +50,7 @@ plt.figure(num=0, dpi=300)
 plt.plot(x_values, y_values)
 plt.plot(x_values, x_axis, color="black")
 plt.title("Wykres pokazowy")
+plt.savefig("wykres_poczatkowy.png")
 plt.show()
 
 a,b = 0, 0
@@ -129,7 +130,7 @@ fa_approx = 0
 fa_accur_iter = 0
 
 print()
-print("------------------------- Wyliczono przyblizone wartosci miejsc zerowych oboma metodami. Oto wyniki ---------------------------------")
+print("------------------------- Wyliczono przyblizone wartosci miejsc zerowych obietylkono u mniema metodami. Oto wyniki ---------------------------------")
 print()
 
 if stop_con == "1":
@@ -163,6 +164,7 @@ plt.plot(bi_approx, 0, marker='^', color='green', label='Algorytm Bisekcji')
 plt.plot(fa_approx, 0, marker='o', color='red', label='Reguła Falsi')
 plt.title("Wykres na przedzialem takim jak na wykresie pokazowym")
 plt.legend()
+plt.savefig("wykres_poczatkowy.png")
 plt.show()
 
 x_values = np.arange(a, b+0.1, 0.1)
@@ -176,6 +178,7 @@ plt.plot(bi_approx, 0, marker='^', color='green', label='Algorytm Bisekcji')
 plt.plot(fa_approx, 0, marker='o', color='red', label='Reguła Falsi')
 plt.title("Wykres na wybranym przez uzytkownika przedziale")
 plt.legend()
+plt.savefig("wykres_przedział.png")
 plt.show()
 
 length = abs(bi_approx-fa_approx)
@@ -193,5 +196,6 @@ plt.plot(x_values, x_axis, color="black")
 plt.plot(bi_approx, 0, marker='^', color='green', label='Algorytm Bisekcji')
 plt.plot(fa_approx, 0, marker='o', color='red', label='Reguła Falsi')
 plt.title("wykres z przedzialem dostosowanym do osiagnietych wynikow")
+plt.savefig("wykres_dostosowany.png")
 plt.legend()
 plt.show()

@@ -14,7 +14,7 @@ class TestAlgorithms(unittest.TestCase):
         self.assertEqual(0, functions.one_root((1.0+3.0)/2))
 
     def test_polynomial(self):
-        result = functions.polynomial(2, 2, [2,3])
+        result = functions.polynomial(2)
         self.assertEqual(7, result)
 
     def test_exponential(self):

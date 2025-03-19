@@ -9,11 +9,13 @@ def polynomial(x):
     length = 5
     result = wspolczynniki[0]
     for i in range(1, length):
-        result = result*x + wspolczynniki[i]
+        result = result * x + wspolczynniki[i]
     return result
 
+
 def exponential(x):
-    return 2**x - 100
+    return 2 ** x - 100
+
 
 """
     x = atleast_1d(x)
@@ -42,26 +44,32 @@ def exponential(x):
             return result - 100
 """
 
+
 def trigonometric(x):
-    return np.sin(x)-0.5
+    return np.sin(x) - 0.5
+
 
 def mixed(x):
-    return np.exp(x)-1000*(np.cos(x/2))-250
+    return np.exp(x) - 1000 * (np.cos(x / 2)) - 250
+
 
 def const_zero(x):
-    return x*0
+    return x * 0
 
 
 ######### FUNCTIONS FOR TESTS ############
 
 def one_root(x):
-    return x-2
+    return x - 2
+
 
 def one_root_2(x):
-    return x-1.43275294722938562918374
+    return x - 1.43275294722938562918374
+
 
 def two_roots(x):
-    return x*(x-6)+8
+    return x * (x - 6) + 8
+
 
 def tree_roots(x):
-    return (x-1.237261)*(x-2.437983)*(x-3.9726334)
+    return (x - 1.237261) * (x - 2.437983) * (x - 3.9726334)
