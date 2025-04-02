@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def swap_rows(A, row1, row2):
     A[[row1, row2]] = A[[row2, row1]]
 
@@ -31,18 +30,18 @@ def fix_diagonal_zeros(A, b, memory):
                 else:
                     raise ValueError("Nie można uniknąć zera na przekątnej!")
 
-    return A, b
+    return A, b, memory
 
 
 def jordan_elimination(A, b, memory):
-    A, b = fix_diagonal_zeros(A, b, memory)
+    A, b, memory = fix_diagonal_zeros(A, b, memory)
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float).reshape(-1, 1)
     AB = np.hstack((A, b))  # Tworzymy rozszerzoną macierz
     n = len(b)
 
     for i in range(n):
-        A, b = fix_diagonal_zeros(A, b, memory)  # Sprawdzamy przekątną po każdej eliminacji
+        A, b, memory = fix_diagonal_zeros(A, b, memory)  # Sprawdzamy przekątną po każdej eliminacji
 
         # Normalizacja wiersza
         AB[i] /= AB[i, i]
@@ -52,7 +51,7 @@ def jordan_elimination(A, b, memory):
             if i != j:
                 AB[j] -= AB[i] * AB[j, i]
 
-    return AB[:, -1]  # Zwracamy ostatnią kolumnę (rozwiązanie)
+    return AB[:, -1], memory  # Zwracamy ostatnią kolumnę (rozwiązanie)
 
 
 def is_inconsistent(A, b):
