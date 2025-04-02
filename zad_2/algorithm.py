@@ -2,21 +2,13 @@ import numpy as np
 
 
 def swap_rows(A, row1, row2):
-    """Zamienia dwa wiersze w macierzy A."""
     A[[row1, row2]] = A[[row2, row1]]
 
-
 def swap_columns(A, col1, col2):
-    """Zamienia dwie kolumny w macierzy A."""
     A[:, [col1, col2]] = A[:, [col2, col1]]
 
 
 def fix_diagonal_zeros(A, b, memory):
-    """
-    Sprawdza, czy na przekątnej macierzy A są zera i w razie potrzeby zamienia wiersze lub kolumny.
-    :param A: macierz współczynników (n x n)
-    :param b: wektor wynikowy (n x 1)
-    """
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float).reshape(-1, 1)
     n = len(A)
@@ -43,13 +35,6 @@ def fix_diagonal_zeros(A, b, memory):
 
 
 def jordan_elimination(A, b, memory):
-    """
-    Rozwiązuje układ równań liniowych Ax = b metodą eliminacji Jordana-Gaussa.
-    :param memory:
-    :param A: macierz współczynników (n x n)
-    :param b: wektor wynikowy (n x 1)
-    :return: wektor rozwiązań x (n x 1)
-    """
     A, b = fix_diagonal_zeros(A, b, memory)
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float).reshape(-1, 1)
@@ -68,3 +53,25 @@ def jordan_elimination(A, b, memory):
                 AB[j] -= AB[i] * AB[j, i]
 
     return AB[:, -1]  # Zwracamy ostatnią kolumnę (rozwiązanie)
+
+
+def is_inconsistent(A, b):
+    A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float).reshape(-1, 1)
+    AB = np.hstack((A, b))  # Macierz rozszerzona
+
+    rank_A = np.linalg.matrix_rank(A)
+    rank_AB = np.linalg.matrix_rank(AB)
+
+    return rank_A != rank_AB
+
+
+def is_underdetermined(A, b):
+    A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float).reshape(-1, 1)
+    AB = np.hstack((A, b))  # Macierz rozszerzona
+
+    rank_A = np.linalg.matrix_rank(A)
+    rank_AB = np.linalg.matrix_rank(AB)
+
+    return rank_A == rank_AB and rank_A < len(A)
