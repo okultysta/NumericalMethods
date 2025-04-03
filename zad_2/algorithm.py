@@ -7,42 +7,41 @@ def swap_columns(A, col1, col2):
     A[:, [col1, col2]] = A[:, [col2, col1]]
 
 
-def fix_diagonal_zeros(A, b, memory):
-    A = np.array(A, dtype=float)
-    b = np.array(b, dtype=float).reshape(-1, 1)
-    n = len(A)
+def fix_diagonal_zeros(AB, memory):
+    n = AB.shape[0]  # Liczba równań (i zmiennych)
 
     for i in range(n):
-        if A[i, i] == 0:
+        if AB[i, i] == 0:
             # Szukamy wiersza do zamiany
             for j in range(i + 1, n):
-                if A[j, i] != 0:
-                    swap_rows(A, i, j)
-                    swap_rows(b, i, j)
-                    swap_rows(memory, i, j)
+                if AB[j, i] != 0:
+                    swap_rows(AB, i, j)
                     break
             else:
                 # Jeśli nie znaleziono wiersza, próbujemy zamianę kolumn
                 for j in range(i + 1, n):
-                    if A[i, j] != 0:
-                        swap_columns(A, i, j)
+                    if AB[i, j] != 0:
+                        swap_columns(AB, i, j)
+                        memory[i], memory[j] = memory[j], memory[i]  # Aktualizujemy nazwy zmiennych
                         break
                 else:
-                    raise ValueError("Nie można uniknąć zera na przekątnej!")
+                    raise ValueError("Nie można uniknąć zera na przekątnej! Układ może być nieoznaczony lub sprzeczny.")
 
-    return A, b, memory
+    return AB, memory
 
 
 def jordan_elimination(A, b, memory):
-    A, b, memory = fix_diagonal_zeros(A, b, memory)
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float).reshape(-1, 1)
     AB = np.hstack((A, b))  # Tworzymy rozszerzoną macierz
     n = len(b)
+    print(AB)
+    print()
 
     for i in range(n):
-        A, b, memory = fix_diagonal_zeros(A, b, memory)  # Sprawdzamy przekątną po każdej eliminacji
-
+        AB, memory = fix_diagonal_zeros(AB, memory)  # Sprawdzamy przekątną po każdej eliminacji
+        print(AB)
+        print()
         # Normalizacja wiersza
         AB[i] /= AB[i, i]
 
@@ -51,6 +50,7 @@ def jordan_elimination(A, b, memory):
             if i != j:
                 AB[j] -= AB[i] * AB[j, i]
 
+    print(AB)
     return AB[:, -1], memory  # Zwracamy ostatnią kolumnę (rozwiązanie)
 
 

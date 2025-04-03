@@ -1,4 +1,5 @@
 def load_from_file(filename):
+    filename = "../pliki_zad2/" + filename
     with open(filename, 'r') as file:
         lines = file.readlines()
 
