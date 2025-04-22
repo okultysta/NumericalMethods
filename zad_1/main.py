@@ -12,7 +12,6 @@ print("3.wykładnicza: 2^x - 100")
 print("4.Złożenie: e^x - 1000*cos(x/2) - 250")
 
 function = functions.polynomial
-not_chosen = True
 flag = True
 
 while flag:

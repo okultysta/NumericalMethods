@@ -35,13 +35,13 @@ def jordan_elimination(A, b, memory):
     b = np.array(b, dtype=float).reshape(-1, 1)
     AB = np.hstack((A, b))  # Tworzymy rozszerzoną macierz
     n = len(b)
-    print(AB)
-    print()
+    #print(AB)
+    #print()
 
     for i in range(n):
         AB, memory = fix_diagonal_zeros(AB, memory)  # Sprawdzamy przekątną po każdej eliminacji
-        print(AB)
-        print()
+        #print(AB)
+        #print()
         # Normalizacja wiersza
         AB[i] /= AB[i, i]
 
@@ -50,7 +50,7 @@ def jordan_elimination(A, b, memory):
             if i != j:
                 AB[j] -= AB[i] * AB[j, i]
 
-    print(AB)
+    #print(AB)
     return AB[:, -1], memory  # Zwracamy ostatnią kolumnę (rozwiązanie)
 
 
