@@ -1,5 +1,6 @@
 import math
 
+
 def lagrange_interpolation(nodes, func):
     y_values = [func(x) for x in nodes]
 
