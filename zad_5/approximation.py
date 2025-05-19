@@ -1,59 +1,71 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from math import factorial
+from scipy.special import roots_laguerre
 
 
-def gauss_laguerre_quadrature(f, n):
-    """
-    Całkowanie metodą Gaussa-Laguerre'a.
-    Zakres całkowania: [0, ∞).
-    """
-    x, w = np.polynomial.laguerre.laggauss(n)
-    return sum(w * f(x))
-
-
+# Wielomiany Laguerre'a (poprawione)
 def laguerre(n, x):
-    """ Obliczanie wielomianów Laguerre'a iteracyjnie. """
     if n == 0:
-        return 1
+        return np.ones_like(x)
     elif n == 1:
         return 1 - x
+    L_prev, L_curr = np.ones_like(x), 1 - x
+    for k in range(1, n):
+        L_next = ((2 * k + 1 - x) * L_curr - k * L_prev) / (k + 1)
+        L_prev, L_curr = L_curr, L_next
+    return L_curr
+
+
+# Całkowanie Gaussa-Laguerre'a
+def gauss_laguerre_integrate(f, n):
+    nodes, weights = roots_laguerre(n)
+    return np.sum(weights * f(nodes))
+
+
+# Aproksymacja funkcji
+def approximate(f, degree, nodes):
+    coefficients = np.zeros(degree + 1)
+    for k in range(degree + 1):
+        integrand = lambda x: f(x) * laguerre(k, x)
+        coefficients[k] = gauss_laguerre_integrate(integrand, nodes) / factorial(k) ** 2
+    return coefficients
+
+
+# Obliczanie wartości aproksymowanej funkcji
+def approx_function(x, coefficients):
+    return sum(c * laguerre(k, x) for k, c in enumerate(coefficients))
+
+
+
+def calculate_error(f, coefficients, a=0, b=10, nodes=6):
+    # Definiujemy funkcję błędu z wagą e^(-x)
+    def error_func(x):
+        return (f(x) - approx_function(x, coefficients))**2 * np.exp(-x)
+
+    # Jeśli chcemy policzyć na przedziale [a, b] - używamy Legendre
+    if b < np.inf:
+        from scipy.special import roots_legendre
+        nodes, weights = roots_legendre(nodes)
+        integral = 0.0
+        for xi, wi in zip(nodes, weights):
+            x = 0.5 * (a + b) + 0.5 * (b - a) * xi
+            integral += wi * error_func(x)
+        return np.sqrt(0.5 * (b - a) * integral)
     else:
-        L0, L1 = 1, 1 - x
-        for k in range(2, n + 1):
-            L0, L1 = L1, ((2 * k - 1 - x) * L1 - (k - 1) * L0) / k
-        return L1
+        # Dla przedziału [0, inf) używamy Laguerre
+        return np.sqrt(gauss_laguerre_integrate(error_func, nodes))
 
 
-def horner_scheme(coeffs, x):
-    """ Schemat Hornera do szybkiego obliczania wartości wielomianu """
-    result = coeffs[0]
-    for coeff in coeffs[1:]:
-        result = result * x + coeff
-    return result
-
-
-def approximate(function, degree, nodes=10):
-    coeffs = []
-    for n in range(degree + 1):
-        integrand = lambda x: function(x) * laguerre(n, x)
-        coeff = gauss_laguerre_quadrature(integrand, nodes)
-        coeffs.append(coeff)
-    return coeffs
-
-
-def plot_approximation(function, coeffs, a, b):
-    x_values = np.linspace(a, b, 500)
-    y_original = [function(x) for x in x_values]
-    y_approx = [horner_scheme(coeffs, x) for x in x_values]
-
-    plt.plot(x_values, y_original, label="Funkcja oryginalna")
-    plt.plot(x_values, y_approx, label="Aproksymacja (Laguerre)", linestyle='--')
+# Wizualizacja wyników
+def plot_approximation(f, coefficients, a, b):
+    x = np.linspace(a, b, 1000)
+    plt.figure(figsize=(10, 6))
+    plt.plot(x, f(x), label="Oryginalna")
+    plt.plot(x, approx_function(x, coefficients), label="Aproksymacja")
+    plt.title("Porównanie funkcji oryginalnej i aproksymacji")
+    plt.xlabel("x")
+    plt.ylabel("y")
     plt.legend()
-    plt.grid(True)
+    plt.grid()
     plt.show()
-
-
-def calculate_error(function, coeffs, a, b, points=1000):
-    x_values = np.linspace(a, b, points)
-    error = sum((function(x) - horner_scheme(coeffs, x)) ** 2 for x in x_values)
-    return error / points

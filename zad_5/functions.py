@@ -22,7 +22,7 @@ def trigonometric(x):
 
 def absolute_value(x):
 
-    return np.abs(x) - 2
+    return np.abs(x)
 
 
 def mixed(x):
