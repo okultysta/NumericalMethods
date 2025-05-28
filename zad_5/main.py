@@ -1,50 +1,37 @@
 import numpy as np
 
-def polynomial(x):
-    wspolczynniki = [0.5, 0.2, -5, 3]  # Przykładowe współczynniki
-    length = len(wspolczynniki)
-    result = wspolczynniki[0]
-    for i in range(1, length):
-        result = result * x + wspolczynniki[i]
-    return result
 
-def exponential(x):
-    return np.exp(0.5 * x) - 5
-
-def trigonometric(x):
-    return np.sin(2 * x) / (x + 0.5)
-
-def absolute_value(x):
-    return np.abs(x)
-
-def mixed(x):
-    return np.exp(0.2 * x) - 5 * np.cos(x / 2)
 
 from approximation import (
     approximate,
     plot_approximation,
     calculate_error
 )
+from zad_5.functions import polynomial, trigonometric, mixed, absolute_value, exponential, linear
+
 
 def choose_function():
     print("Wybierz funkcję z podanych wpisując cyfrę znajdującą się obok funkcji:")
     print("1. Wielomian: 0.5x³ + 0.2x² - 5x + 3")
-    print("2. Trygonometryczna: sin(2x)/(x + 0.5)")
-    print("3. Wykładnicza: e^(0.5x) - 5")
-    print("4. Wartość bezwzględna: |x|")
-    print("5. Złożenie: e^(0.2x) - 5cos(x/2)")
+    print("2. Liniowa 2x+3")
+    print("3. Trygonometryczna: sin(2x)")
+    print("4. Wykładnicza: e^(0.5x) - 5")
+    print("5. Wartość bezwzględna: |x|")
+    print("6. Złożenie: e^(0.2x) - 5cos(x/2)")
 
     while True:
         choice = input("Wpisz numer wybranej funkcji [1/2/3/4/5]: ")
         if choice == "1":
             return polynomial, "wielomian"
         elif choice == "2":
-            return trigonometric, "trygonometryczna"
+            return linear, "liniowa"
         elif choice == "3":
-            return exponential, "wykładnicza"
+            return trigonometric, "trygonometryczna"
         elif choice == "4":
-            return absolute_value, "moduł"
+            return exponential, "wykładnicza"
         elif choice == "5":
+            return absolute_value, "moduł"
+        elif choice == "6":
             return mixed, "złożenie"
         else:
             print("BŁĄD: Brak wybranej opcji. Spróbuj ponownie.")
@@ -95,3 +82,4 @@ if __name__ == "__main__":
         main_auto()
     else:
         print("Nieznany tryb. Kończę.")
+
